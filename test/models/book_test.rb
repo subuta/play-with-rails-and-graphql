@@ -1,11 +1,7 @@
 require "test_helper"
 
 class BookTest < ActiveSupport::TestCase
-  fixtures :users
-
-  test "the truth" do
-    u = Review.all
-    pp u
-    assert true
+  test "should have author" do
+    assert_equal 'Griselda Spencer', Book.find(1).author.username
   end
 end
