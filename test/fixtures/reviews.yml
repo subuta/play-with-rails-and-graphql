@@ -25,7 +25,7 @@ CSV_TEXT
 
 <% CSV.parse(reviews, headers: true).each.with_index do |row, i| %>
   review_<%= i + 1 %>:
-    id: <%= i %>
+    id: <%= i + 1 %>
     stars: <%= row['stars'] %>
     comment: <%= row['comment'] %>
     reviewer_id: <%= row['reviewer_id'] %>

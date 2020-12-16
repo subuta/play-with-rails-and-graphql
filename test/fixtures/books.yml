@@ -20,7 +20,7 @@ CSV_TEXT
 
 <% CSV.parse(books, headers: true).each.with_index do |row, i| %>
   book_<%= i + 1 %>:
-    id: <%= i %>
+    id: <%= i + 1 %>
     title: <%= row['title'] %>
     author_id: <%= row['author_id'] %>
   <% end %>

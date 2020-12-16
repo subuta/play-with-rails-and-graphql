@@ -7,5 +7,9 @@ module Types
     field :author_id, Integer, null: true
 
     field :author, Types::UserType, null: true
+
+    def author
+      RecordLoader.for(User).load(object.author_id)
+    end
   end
 end

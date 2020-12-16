@@ -21,6 +21,14 @@ module Types
       Post.find(id)
     end
 
+    field :posts, [Types::PostType], null: false do
+      description "An example field added by the generator"
+    end
+
+    def posts
+      Post.all
+    end
+
     field :review, Types::ReviewType, null: true do
       description "An example field added by the generator"
       argument :id, Integer, required: true
@@ -39,12 +47,13 @@ module Types
       User.find(id)
     end
 
-    field :users, [Types::UserType], null: true do
+    field :users, [Types::UserType], null: false do
       description "An example field added by the generator"
       argument :ids, [GraphQL::Types::Int, null: true], required: false
     end
 
     def users(ids:)
+      # User.where(id: ids)
       User.where(id: ids)
     end
   end

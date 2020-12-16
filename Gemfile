@@ -4,10 +4,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Use GraphQL
-gem 'graphql'
+gem 'graphql', '~> 1.9', '>= 1.9.9'
 
-# Use dataloader for GraphQL
-gem "dataloader"
+# DataLoader for GraphQL
+gem 'graphql-batch', '~> 0.4.1'
 
 # For seed data
 gem "faker"

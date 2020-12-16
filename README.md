@@ -20,5 +20,9 @@ docker-compose exec web bundle exec rake db:seed
 docker-compose exec web bundle exec rake db:reset
 
 # Run test with watcher(guard)
-docker-compose exec web bundle exec guard --no-interactions
+docker-compose exec web bundle exec guard
 ```
+
+### References
+
+SE: https://pganalyze.com/blog/efficient-graphql-queries-in-ruby-on-rails-and-postgres
