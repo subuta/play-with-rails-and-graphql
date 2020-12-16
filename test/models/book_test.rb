@@ -1,7 +1,11 @@
 require "test_helper"
 
 class BookTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  fixtures :users
+
+  test "the truth" do
+    u = Review.all
+    pp u
+    assert true
+  end
 end

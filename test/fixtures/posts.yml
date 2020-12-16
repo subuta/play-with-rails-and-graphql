@@ -4,8 +4,23 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+
+<%
+require "csv"
+
+posts = <<~CSV_TEXT
+title,author_id
+Chuck Norris' preferred IDE is hexedit.,4
+"Chuck Norris doesn't need a java compiler, he goes straight to .war",2
+"Chuck Norris' programs occupy 150% of CPU, even when they are not executing.",5
+Chuck Norris's beard can type 140 wpm.,4
+Chuck Norris went out of an infinite loop.,3
+CSV_TEXT
+%>
+
+<% CSV.parse(posts, headers: true).each.with_index do |row, i| %>
+  post_<%= i + 1 %>:
+    id: <%= i %>
+    title: <%= row['title'] %>
+    author_id: <%= row['author_id'] %>
+  <% end %>

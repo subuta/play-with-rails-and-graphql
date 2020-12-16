@@ -4,8 +4,23 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+
+<%
+require "csv"
+
+books = <<~CSV_TEXT
+title,author_id
+The Golden Bowl,4
+"Alone on a Wide, Wide Sea",2
+Cover Her Face,5
+The Line of Beauty,2
+Tirra Lirra by the River,1
+CSV_TEXT
+%>
+
+<% CSV.parse(books, headers: true).each.with_index do |row, i| %>
+  book_<%= i + 1 %>:
+    id: <%= i %>
+    title: <%= row['title'] %>
+    author_id: <%= row['author_id'] %>
+  <% end %>

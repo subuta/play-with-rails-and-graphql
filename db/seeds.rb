@@ -10,11 +10,11 @@ require "csv"
 
 users = <<~CSV_TEXT
   email,username,avatar_url
-  user-0@example.com,Mr. Hank Runte,https://robohash.org/sintutomnis.png?size=300x300&set=set1
-  user-1@example.com,Glory Barrows,https://robohash.org/molestiasenimcorporis.png?size=300x300&set=set1
-  user-2@example.com,Griselda Spencer,https://robohash.org/istedignissimosvoluptate.png?size=300x300&set=set1
-  user-3@example.com,Mrs. Zella Leuschke,https://robohash.org/eaautemducimus.png?size=300x300&set=set1
-  user-4@example.com,Victoria Kris,https://robohash.org/sintcorporisfugit.png?size=300x300&set=set1
+  user-1@example.com,Mr. Hank Runte,https://robohash.org/sintutomnis.png?size=300x300&set=set1
+  user-2@example.com,Glory Barrows,https://robohash.org/molestiasenimcorporis.png?size=300x300&set=set1
+  user-3@example.com,Griselda Spencer,https://robohash.org/istedignissimosvoluptate.png?size=300x300&set=set1
+  user-4@example.com,Mrs. Zella Leuschke,https://robohash.org/eaautemducimus.png?size=300x300&set=set1
+  user-5@example.com,Victoria Kris,https://robohash.org/sintcorporisfugit.png?size=300x300&set=set1
 CSV_TEXT
 
 CSV.parse(users, headers: true) { |row| User.create(row.to_h) }

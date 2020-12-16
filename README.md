@@ -18,4 +18,7 @@ docker-compose exec web bundle exec rake db:seed
 
 # For reset database(with seed).
 docker-compose exec web bundle exec rake db:reset
+
+# Run test with watcher(guard)
+docker-compose exec web bundle exec guard --no-interactions
 ```
