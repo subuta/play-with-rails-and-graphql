@@ -7,5 +7,8 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :reviewer_id, Integer, null: true
     field :book_id, Integer, null: true
+
+    field :book, Types::BookType, null: true
+    field :reviewer, Types::UserType, null: true
   end
 end

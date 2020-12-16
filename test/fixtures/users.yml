@@ -20,7 +20,7 @@ CSV_TEXT
 
 <% CSV.parse(users, headers: true).each.with_index do |row, i| %>
   user_<%= i + 1 %>:
-    id: <%= i %>
+    id: <%= i + 1 %>
     email: <%= row['email'] %>
     username: <%= row['username'] %>
     avatar_url: <%= row['avatar_url'] %>

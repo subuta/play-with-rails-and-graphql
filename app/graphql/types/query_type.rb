@@ -11,5 +11,41 @@ module Types
     def book(id:)
       Book.find(id)
     end
+
+    field :post, Types::PostType, null: true do
+      description "An example field added by the generator"
+      argument :id, Integer, required: true
+    end
+
+    def post(id:)
+      Post.find(id)
+    end
+
+    field :review, Types::ReviewType, null: true do
+      description "An example field added by the generator"
+      argument :id, Integer, required: true
+    end
+
+    def review(id:)
+      Review.find(id)
+    end
+
+    field :user, Types::UserType, null: true do
+      description "An example field added by the generator"
+      argument :id, Integer, required: true
+    end
+
+    def user(id:)
+      User.find(id)
+    end
+
+    field :users, [Types::UserType], null: true do
+      description "An example field added by the generator"
+      argument :ids, [GraphQL::Types::Int, null: true], required: false
+    end
+
+    def users(ids:)
+      User.where(id: ids)
+    end
   end
 end
