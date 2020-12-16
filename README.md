@@ -14,4 +14,8 @@ docker-compose up
 # Create/Migrate database if needed.
 docker-compose exec web bundle exec rake db:create
 docker-compose exec web bundle exec rake db:migrate
+docker-compose exec web bundle exec rake db:seed
+
+# For reset database(with seed).
+docker-compose exec web bundle exec rake db:reset
 ```
