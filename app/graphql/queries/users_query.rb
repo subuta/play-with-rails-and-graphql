@@ -1,6 +1,6 @@
 module Queries
   class UsersQuery < BaseQuery
-    type [Types::UserType], null: false
+    type Connections::UserConnection, null: false
     description "Query multiple user"
 
     argument :ids, [GraphQL::Types::Int, null: true], required: false
