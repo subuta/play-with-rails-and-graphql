@@ -1,5 +1,7 @@
 module Types
   class ReviewType < Types::BaseObject
+    graphql_name "Review"
+
     field :id, Integer, null: false
     field :stars, Integer, null: true
     field :comment, String, null: true
@@ -10,5 +12,13 @@ module Types
 
     field :book, Types::BookType, null: true
     field :reviewer, Types::UserType, null: true
+
+    def book
+      Loaders::RecordLoader.for(Book).load(object.book_id)
+    end
+
+    def reviewer
+      Loaders::RecordLoader.for(User).load(object.reviewer_id)
+    end
   end
 end

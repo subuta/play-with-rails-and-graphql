@@ -3,6 +3,11 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
+    # Example of splitting query into other file.
+    # SEE: https://github.com/rmosolgo/graphql-ruby/issues/1825
+    field :post, resolver: Queries::PostQuery
+    field :posts, resolver: Queries::PostsQuery
+
     field :book, Types::BookType, null: true do
       description "An example field added by the generator"
       argument :id, Integer, required: true
@@ -10,23 +15,6 @@ module Types
 
     def book(id:)
       Book.find(id)
-    end
-
-    field :post, Types::PostType, null: true do
-      description "An example field added by the generator"
-      argument :id, Integer, required: true
-    end
-
-    def post(id:)
-      Post.find(id)
-    end
-
-    field :posts, [Types::PostType], null: false do
-      description "An example field added by the generator"
-    end
-
-    def posts
-      Post.all
     end
 
     field :review, Types::ReviewType, null: true do

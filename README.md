@@ -25,4 +25,7 @@ docker-compose exec web bundle exec guard
 
 ### References
 
-SE: https://pganalyze.com/blog/efficient-graphql-queries-in-ruby-on-rails-and-postgres
+- [Efficient GraphQL queries in Ruby on Rails & Postgres](https://pganalyze.com/blog/efficient-graphql-queries-in-ruby-on-rails-and-postgres)
+- [GraphQL::Batchのサンプルコードを読む & 使ってみる - kymmt](https://blog.kymmt.com/entry/graphql-batch-examples)
+- [Split QueryType into separate files · Issue #1825 · rmosolgo/graphql-ruby](https://github.com/rmosolgo/graphql-ruby/issues/1825)
+- [kymmt90-sandbox/rails-graphql-batch](https://github.com/kymmt90-sandbox/rails-graphql-batch)
