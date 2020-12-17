@@ -7,6 +7,8 @@ module Types
     # SEE: https://github.com/rmosolgo/graphql-ruby/issues/1825
     field :post, resolver: Queries::PostQuery
     field :posts, resolver: Queries::PostsQuery
+    field :user, resolver: Queries::UserQuery
+    field :users, resolver: Queries::UsersQuery
 
     field :book, Types::BookType, null: true do
       description "An example field added by the generator"
@@ -24,25 +26,6 @@ module Types
 
     def review(id:)
       Review.find(id)
-    end
-
-    field :user, Types::UserType, null: true do
-      description "An example field added by the generator"
-      argument :id, Integer, required: true
-    end
-
-    def user(id:)
-      User.find(id)
-    end
-
-    field :users, [Types::UserType], null: false do
-      description "An example field added by the generator"
-      argument :ids, [GraphQL::Types::Int, null: true], required: false
-    end
-
-    def users(ids:)
-      # User.where(id: ids)
-      User.where(id: ids)
     end
   end
 end
