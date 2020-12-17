@@ -5,12 +5,18 @@ module GQL
     test "should allow node query" do
       query_string = <<-GRAPHQL
       query {
-        node(id: "MQ") {
+        node (id: "VXNlci0y") {
           id
+          ... on User {
+            email
+          }
         }
         
-        nodes(ids: ["MQ", "Mg"]) {
+        nodes(ids: ["VXNlci0x", "VXNlci0y"]) {
           id
+          ... on User {
+            email
+          }
         }
       }
       GRAPHQL
@@ -18,10 +24,10 @@ module GQL
       result = AppSchema.execute(query_string, variables: {})
 
       assert_equal ({
-        "node"=>{"id"=>"MQ"},
-        "nodes"=>[
-          {"id"=>"MQ"},
-          {"id"=>"Mg"},
+        "node" => { "id" => 2, "email" => "user-2@example.com" },
+        "nodes" => [
+          { "id" => 1, "email" => "user-1@example.com" },
+          { "id" => 2, "email" => "user-2@example.com" }
         ]
       }), result['data']
     end

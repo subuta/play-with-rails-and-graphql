@@ -30,3 +30,4 @@ docker-compose exec web bundle exec guard
 - [Split QueryType into separate files · Issue #1825 · rmosolgo/graphql-ruby](https://github.com/rmosolgo/graphql-ruby/issues/1825)
 - [kymmt90-sandbox/rails-graphql-batch](https://github.com/kymmt90-sandbox/rails-graphql-batch)
 - [graphql-batch/examples at master · Shopify/graphql-batch](https://github.com/Shopify/graphql-batch/tree/master/examples)
+- [First dive into GraphQL Ruby - DEV](https://dev.to/tymate/first-dive-into-graphql-ruby-nak)

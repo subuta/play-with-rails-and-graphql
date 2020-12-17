@@ -2,6 +2,12 @@ module Types
   class UserType < Types::BaseObject
     graphql_name "User"
 
+    implements GraphQL::Types::Relay::Node
+
+    # SEE: https://github.com/facebook/relay/issues/1061#issuecomment-227857031
+    global_id_field :__id
+    field :__id, GraphQL::Types::ID, null: false
+
     field :id, Integer, null: false
     field :email, String, null: true
     field :username, String, null: true

@@ -2,7 +2,7 @@ require "test_helper"
 
 module GQL
   class UserTest < ActiveSupport::TestCase
-    test "should avoid n+1 on relay query" do
+    test "should avoid n+1 on relay connection query" do
       query_string = <<-GRAPHQL
       query($ids: [Int!]){
         users(ids: $ids, first: 1) {
