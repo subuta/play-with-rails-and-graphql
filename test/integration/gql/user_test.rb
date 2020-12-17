@@ -2,15 +2,34 @@ require "test_helper"
 
 module GQL
   class UserTest < ActiveSupport::TestCase
-    test "should avoid n+1 on complex nested query" do
+    test "should avoid n+1 on relay query" do
       query_string = <<-GRAPHQL
       query($ids: [Int!]){
-        users(ids: $ids) {
-          id
-          email
+        users(ids: $ids, first: 1) {
+          totalCount
           
-          books {
-            title
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          
+          nodes {
+            id
+            email
+          }
+          
+          edges {
+            cursor
+            node {
+              id
+              email
+
+              books {
+                title
+              }
+            }
           }
         }
       }
@@ -18,13 +37,28 @@ module GQL
 
       result = AppSchema.execute(query_string, variables: { ids: [1, 2, 3, 4, 5] })
 
-      assert_equal ({ "users" => [
-        { "id" => 1, "email" => "user-1@example.com", "books" => [{ "title" => "Tirra Lirra by the River" }] },
-        { "id" => 2, "email" => "user-2@example.com", "books" => [{ "title" => "Alone on a Wide, Wide Sea" }, { "title" => "The Line of Beauty" }] },
-        { "id" => 3, "email" => "user-3@example.com", "books" => [] },
-        { "id" => 4, "email" => "user-4@example.com", "books" => [{ "title" => "The Golden Bowl" }] },
-        { "id" => 5, "email" => "user-5@example.com", "books" => [{ "title" => "Cover Her Face" }] }]
-      }), result['data']
+      assert_equal ({ "users" => {
+        "totalCount" => 5,
+        "pageInfo" => {
+          "startCursor" => "MQ",
+          "endCursor" => "MQ",
+          "hasNextPage" => true,
+          "hasPreviousPage" => false
+        },
+        "nodes" => [
+          { "id" => 1, "email" => "user-1@example.com" }
+        ],
+        "edges" => [
+          { "cursor" => "MQ",
+            "node" => {
+              "id" => 1,
+              "email" => "user-1@example.com",
+              "books" => [
+                { "title" => "Tirra Lirra by the River" }
+              ]
+            }
+          }]
+      } }), result['data']
     end
   end
 end

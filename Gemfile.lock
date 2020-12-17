@@ -167,7 +167,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     thor (1.0.1)
-    tzinfo (2.0.3)
+    tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
@@ -181,7 +181,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   faker
-  graphql (~> 1.9, >= 1.9.9)
+  graphql (~> 1.11.6)
   graphql-batch (~> 0.4.1)
   guard
   guard-minitest

@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Use GraphQL
-gem 'graphql', '~> 1.9', '>= 1.9.9'
+gem 'graphql', '~> 1.11.6'
 
 # DataLoader for GraphQL
 gem 'graphql-batch', '~> 0.4.1'
