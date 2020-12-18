@@ -3,6 +3,8 @@ import React from 'react'
 
 import environment from '../../utils/relay-environment'
 
+import UserBooks from '../../components/UserBooks'
+
 import { graphql, QueryRenderer } from 'react-relay'
 
 import { useParams, Link } from 'react-router-dom'
@@ -23,8 +25,11 @@ const render = () => {
         query={graphql`
           query userQuery($rowId: Int!) {
             user(rowId: $rowId) {
+              id
               rowId
+              username
               email
+              ...UserBooks_user
             }
           }
         `}
@@ -36,7 +41,13 @@ const render = () => {
           if (!props) {
             return <div>Loading...</div>
           }
-          return <div>User ID: {props.user.rowId}</div>
+          return (
+            <div>
+              <h2 className="font-bold">UserName: {props.user.username}</h2>
+              <h4 className="mt-4">Written books:</h4>
+              <UserBooks user={props.user} />
+            </div>
+          )
         }}
       />
     </div>

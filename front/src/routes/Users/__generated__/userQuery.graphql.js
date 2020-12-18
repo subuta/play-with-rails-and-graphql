@@ -8,13 +8,17 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+type UserBooks_user$ref = any;
 export type userQueryVariables = {|
   rowId: number
 |};
 export type userQueryResponse = {|
   +user: ?{|
+    +id: string,
     +rowId: number,
+    +username: ?string,
     +email: ?string,
+    +$fragmentRefs: UserBooks_user$ref,
   |}
 |};
 export type userQuery = {|
@@ -29,9 +33,20 @@ query userQuery(
   $rowId: Int!
 ) {
   user(rowId: $rowId) {
-    rowId
-    email
     id
+    rowId
+    username
+    email
+    ...UserBooks_user
+  }
+}
+
+fragment UserBooks_user on User {
+  id
+  books {
+    id
+    rowId
+    title
   }
 }
 */
@@ -55,10 +70,24 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "rowId",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "rowId",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "username",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -81,7 +110,14 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/)
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "UserBooks_user"
+          }
         ],
         "storageKey": null
       }
@@ -105,11 +141,26 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "Book",
+            "kind": "LinkedField",
+            "name": "books",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -118,16 +169,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8a313454e00429f4d0788e0f3fbf294b",
+    "cacheID": "9d3660ff359fdb8541a6d903179093f2",
     "id": null,
     "metadata": {},
     "name": "userQuery",
     "operationKind": "query",
-    "text": "query userQuery(\n  $rowId: Int!\n) {\n  user(rowId: $rowId) {\n    rowId\n    email\n    id\n  }\n}\n"
+    "text": "query userQuery(\n  $rowId: Int!\n) {\n  user(rowId: $rowId) {\n    id\n    rowId\n    username\n    email\n    ...UserBooks_user\n  }\n}\n\nfragment UserBooks_user on User {\n  id\n  books {\n    id\n    rowId\n    title\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '26ccdb117527b9648c39dd1d041a30b5';
+(node/*: any*/).hash = '15fa3314469af9faff4ccc600e98f587';
 
 module.exports = node;

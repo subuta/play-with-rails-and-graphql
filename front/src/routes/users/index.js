@@ -4,6 +4,8 @@ import _ from 'lodash'
 
 import environment from '../../utils/relay-environment'
 
+import UserBooks from '../../components/UserBooks'
+
 import { Link } from 'react-router-dom'
 
 import { graphql, QueryRenderer } from 'react-relay'
@@ -19,6 +21,7 @@ const render = () => {
               id
               rowId
               username
+              ...UserBooks_user
             }
           }
         }
@@ -31,14 +34,17 @@ const render = () => {
         if (!props) {
           return <div>Loading...</div>
         }
+
         return (
           <div>
             <ul>
               {_.map(props.users.nodes, (user) => (
-                <li key={user.rowId}>
+                <li key={user.rowId} className="mb-4">
                   <Link to={`/user/${user.rowId}`}>
-                    {user.rowId} - {user.username}
+                    {user.rowId} - <span className="font-bold">{user.username}</span>
                   </Link>
+
+                  <UserBooks user={user} />
                 </li>
               ))}
             </ul>

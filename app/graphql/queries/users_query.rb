@@ -6,7 +6,8 @@ module Queries
     argument :row_ids, [GraphQL::Types::Int, null: true], required: false
 
     def resolve(row_ids:)
-      User.where(id: row_ids)
+      return User.where(id: row_ids) if row_ids.present?
+      User.all
     end
   end
 end
