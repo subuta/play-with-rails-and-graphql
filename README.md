@@ -31,6 +31,12 @@ docker-compose exec web bundle exec guard
 
 # Generate current schema as json for client(relay)
 docker-compose exec web bundle exec rake gql:dump_schema
+
+# Start development server for front-end
+npm run dev
+
+# Start watching relay-compiler
+npm run relay -- --watch
 ```
 
 ### References
