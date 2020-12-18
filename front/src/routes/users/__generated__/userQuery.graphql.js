@@ -8,23 +8,27 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type AppQueryVariables = {||};
-export type AppQueryResponse = {|
+export type userQueryVariables = {|
+  rowId: number
+|};
+export type userQueryResponse = {|
   +user: ?{|
     +rowId: number,
     +email: ?string,
   |}
 |};
-export type AppQuery = {|
-  variables: AppQueryVariables,
-  response: AppQueryResponse,
+export type userQuery = {|
+  variables: userQueryVariables,
+  response: userQueryResponse,
 |};
 */
 
 
 /*
-query AppQuery {
-  user(rowId: 1) {
+query userQuery(
+  $rowId: Int!
+) {
+  user(rowId: $rowId) {
     rowId
     email
     id
@@ -35,19 +39,26 @@ query AppQuery {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "rowId",
-    "value": 1
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "rowId"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "rowId",
+    "variableName": "rowId"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "rowId",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -56,23 +67,23 @@ v2 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AppQuery",
+    "name": "userQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "User",
         "kind": "LinkedField",
         "name": "user",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
-          (v2/*: any*/)
+          (v2/*: any*/),
+          (v3/*: any*/)
         ],
-        "storageKey": "user(rowId:1)"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -80,20 +91,20 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AppQuery",
+    "name": "userQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "User",
         "kind": "LinkedField",
         "name": "user",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -102,21 +113,21 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "user(rowId:1)"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5c416b7a2abddcb434d46e5b7331cc62",
+    "cacheID": "8a313454e00429f4d0788e0f3fbf294b",
     "id": null,
     "metadata": {},
-    "name": "AppQuery",
+    "name": "userQuery",
     "operationKind": "query",
-    "text": "query AppQuery {\n  user(rowId: 1) {\n    rowId\n    email\n    id\n  }\n}\n"
+    "text": "query userQuery(\n  $rowId: Int!\n) {\n  user(rowId: $rowId) {\n    rowId\n    email\n    id\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd6b64ea361b935ff4ee363c673bbfc78';
+(node/*: any*/).hash = '26ccdb117527b9648c39dd1d041a30b5';
 
 module.exports = node;
