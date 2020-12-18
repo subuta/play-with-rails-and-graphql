@@ -1,9 +1,16 @@
 # play-with-rails-and-graphql
 Rails(API Mode) + graphql-ruby + DataLoader example
 
+### Prerequisites
+
+```bash
+# If you run relay compiler.
+brew install watchman
+```
+
 ### How to develop
 
-```
+```bash
 # Run rails new(v6 with API Mode) for creating boilerplate (only first time)
 # SEE: https://qiita.com/masuidrive/items/7478fb9101652f2bbae1
 docker run --rm -v `pwd`:/usr/src/app ruby:2.5.1 sh -c "curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get update -qq && apt-get install -qq --no-install-recommends nodejs && npm i yarn -g && gem install rails && rails new /usr/src/app --database postgresql --force --api --version 6"

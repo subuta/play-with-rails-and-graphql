@@ -28,3 +28,4 @@
 front/.parcel-cache
 front/node_modules
 front/dist
+app-schema.json
