@@ -21,6 +21,9 @@ docker-compose exec web bundle exec rake db:reset
 
 # Run test with watcher(guard)
 docker-compose exec web bundle exec guard
+
+# Generate current schema as json for client(relay)
+docker-compose exec web bundle exec rake gql:dump_schema
 ```
 
 ### References
