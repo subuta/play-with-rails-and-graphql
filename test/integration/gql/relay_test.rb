@@ -8,6 +8,7 @@ module GQL
         node (id: "VXNlci0y") {
           id
           ... on User {
+            rowId
             email
           }
         }
@@ -15,6 +16,7 @@ module GQL
         nodes(ids: ["VXNlci0x", "VXNlci0y"]) {
           id
           ... on User {
+            rowId
             email
           }
         }
@@ -24,10 +26,14 @@ module GQL
       result = AppSchema.execute(query_string, variables: {})
 
       assert_equal ({
-        "node" => { "id" => 2, "email" => "user-2@example.com" },
+        "node" => {
+          "id" => "VXNlci0y",
+          "rowId" => 2,
+          "email" => "user-2@example.com"
+        },
         "nodes" => [
-          { "id" => 1, "email" => "user-1@example.com" },
-          { "id" => 2, "email" => "user-2@example.com" }
+          { "id" => "VXNlci0x", "rowId" => 1, "email" => "user-1@example.com" },
+          { "id" => "VXNlci0y", "rowId" => 2, "email" => "user-2@example.com" }
         ]
       }), result['data']
     end

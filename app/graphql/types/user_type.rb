@@ -5,10 +5,11 @@ module Types
     implements GraphQL::Types::Relay::Node
 
     # SEE: https://github.com/facebook/relay/issues/1061#issuecomment-227857031
-    global_id_field :__id
-    field :__id, GraphQL::Types::ID, null: false
+    global_id_field :id
 
-    field :id, Integer, null: false
+    field :id, GraphQL::Types::ID, null: false
+    field :row_id, Integer, null: false
+
     field :email, String, null: true
     field :username, String, null: true
     field :avatar_url, String, null: true

@@ -3,10 +3,10 @@ module Queries
     type Types::UserType, null: true
     description "Query single user"
 
-    argument :id, Integer, required: true
+    argument :row_id, Integer, required: true
 
-    def resolve(id:)
-      User.find(id)
+    def resolve(row_id:)
+      User.find(row_id)
     end
   end
 end

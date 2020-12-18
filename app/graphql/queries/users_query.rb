@@ -3,10 +3,10 @@ module Queries
     type Connections::UserConnection, null: false
     description "Query multiple user"
 
-    argument :ids, [GraphQL::Types::Int, null: true], required: false
+    argument :row_ids, [GraphQL::Types::Int, null: true], required: false
 
-    def resolve(ids:)
-      User.where(id: ids)
+    def resolve(row_ids:)
+      User.where(id: row_ids)
     end
   end
 end

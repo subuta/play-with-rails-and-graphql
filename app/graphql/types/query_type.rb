@@ -16,20 +16,20 @@ module Types
 
     field :book, Types::BookType, null: true do
       description "An example field added by the generator"
-      argument :id, Integer, required: true
+      argument :row_id, Integer, required: true
     end
 
-    def book(id:)
-      Book.find(id)
+    def book(row_id:)
+      Book.find(row_id)
     end
 
     field :review, Types::ReviewType, null: true do
       description "An example field added by the generator"
-      argument :id, Integer, required: true
+      argument :row_id, Integer, required: true
     end
 
-    def review(id:)
-      Review.find(id)
+    def review(row_id:)
+      Review.find(row_id)
     end
   end
 end

@@ -3,10 +3,10 @@ module Queries
     type Types::PostType, null: true
     description "Query single post"
 
-    argument :id, Integer, required: true
+    argument :row_id, Integer, required: true
 
-    def resolve(id:)
-      Post.find(id)
+    def resolve(row_id:)
+      Post.find(row_id)
     end
   end
 end
