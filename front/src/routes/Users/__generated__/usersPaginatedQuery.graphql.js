@@ -9,22 +9,22 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type users_feed$ref = any;
-export type usersQueryVariables = {|
+export type usersPaginatedQueryVariables = {|
   count: number,
   cursor?: ?string,
 |};
-export type usersQueryResponse = {|
+export type usersPaginatedQueryResponse = {|
   +$fragmentRefs: users_feed$ref
 |};
-export type usersQuery = {|
-  variables: usersQueryVariables,
-  response: usersQueryResponse,
+export type usersPaginatedQuery = {|
+  variables: usersPaginatedQueryVariables,
+  response: usersPaginatedQueryResponse,
 |};
 */
 
 
 /*
-query usersQuery(
+query usersPaginatedQuery(
   $count: Int!
   $cursor: String
 ) {
@@ -104,7 +104,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "usersQuery",
+    "name": "usersPaginatedQuery",
     "selections": [
       {
         "args": null,
@@ -119,7 +119,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "usersQuery",
+    "name": "usersPaginatedQuery",
     "selections": [
       {
         "alias": null,
@@ -234,16 +234,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e6ec1b7f0986ad2da34703d84ebd684d",
+    "cacheID": "180768ef10fa38a2008d8cb80a9febd1",
     "id": null,
     "metadata": {},
-    "name": "usersQuery",
+    "name": "usersPaginatedQuery",
     "operationKind": "query",
-    "text": "query usersQuery(\n  $count: Int!\n  $cursor: String\n) {\n  ...users_feed\n}\n\nfragment UserBooks_user on User {\n  id\n  books {\n    id\n    rowId\n    title\n  }\n}\n\nfragment users_feed on Query {\n  users(first: $count, after: $cursor) {\n    edges {\n      cursor\n      node {\n        id\n        rowId\n        username\n        ...UserBooks_user\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query usersPaginatedQuery(\n  $count: Int!\n  $cursor: String\n) {\n  ...users_feed\n}\n\nfragment UserBooks_user on User {\n  id\n  books {\n    id\n    rowId\n    title\n  }\n}\n\nfragment users_feed on Query {\n  users(first: $count, after: $cursor) {\n    edges {\n      cursor\n      node {\n        id\n        rowId\n        username\n        ...UserBooks_user\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '99b086824eaad3f6ca2c8b7e4897cbf8';
+(node/*: any*/).hash = '620e04d6d13aeff84f518e5db88a86f0';
 
 module.exports = node;
