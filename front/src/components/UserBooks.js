@@ -3,6 +3,8 @@ import _ from 'lodash'
 
 import { useFragment, graphql } from 'relay-hooks'
 
+import useUpdateBookMutation from '../mutations/UpdateBookMutation'
+
 const Row = (props) => {
   const { isEditing = false, onEdit = _.noop, onSave = _.noop, book } = props
 
@@ -11,7 +13,7 @@ const Row = (props) => {
   if (isEditing) {
     return (
       <li className="flex items-center">
-        <input type="text" onChange={(e) => setDraft(e.target.value)} value={draft} />
+        <input className="border px-2 py-1" type="text" onChange={(e) => setDraft(e.target.value)} value={draft} />
 
         <i className="material-icons ml-2 text-xl cursor-pointer hover:opacity-50" onClick={() => onSave(draft)}>
           save
@@ -47,6 +49,7 @@ const fragmentSpec = graphql`
 const render = (props) => {
   const user = useFragment(fragmentSpec, props.user)
   const [idInEditing, edit] = useState(null)
+  const [mutate] = useUpdateBookMutation()
 
   return (
     <ul className="ml-4 bg-red-100">
@@ -56,7 +59,10 @@ const render = (props) => {
           book={book}
           isEditing={idInEditing === book.rowId}
           onEdit={() => edit(book.rowId)}
-          onSave={(draft) => {}}
+          onSave={async (draft) => {
+            await mutate({ title: draft, rowId: book.rowId })
+            edit(null)
+          }}
         />
       ))}
     </ul>

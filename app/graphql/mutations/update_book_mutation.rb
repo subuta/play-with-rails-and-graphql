@@ -9,10 +9,14 @@ module Mutations
     field :book, Types::BookType, null: true
     field :errors, [String], null: false
 
-    def resolve(title:, author_row_id:, rowId:)
+    def resolve(title:, author_row_id: nil, rowId:)
       book = Book.find(rowId)
 
-      book.update(title: title, author_id: author_row_id)
+      payload = {}
+      payload[:title] = title if title.present?
+      payload[:author_row_id] = author_row_id if author_row_id.present?
+
+      book.update(payload)
 
       {
         book: book.reload,
