@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import _ from 'lodash'
 
-import { commitMutation, graphql, createFragmentContainer } from 'react-relay'
+import { useFragment, graphql } from 'relay-hooks'
 
 const Row = (props) => {
   const { isEditing = false, onEdit = _.noop, onSave = _.noop, book } = props
@@ -33,36 +33,34 @@ const Row = (props) => {
   )
 }
 
-const render = createFragmentContainer(
-  (props) => {
-    const [idInEditing, edit] = useState(null)
-
-    return (
-      <ul className="ml-4 bg-red-100">
-        {_.map(props.user.books, (book) => (
-          <Row
-            key={book.rowId}
-            book={book}
-            isEditing={idInEditing === book.rowId}
-            onEdit={() => edit(book.rowId)}
-            onSave={(draft) => {}}
-          />
-        ))}
-      </ul>
-    )
-  },
-  {
-    user: graphql`
-      fragment UserBooks_user on User {
-        id
-        books {
-          id
-          rowId
-          title
-        }
-      }
-    `,
+const fragmentSpec = graphql`
+  fragment UserBooks_user on User {
+    id
+    books {
+      id
+      rowId
+      title
+    }
   }
-)
+`
+
+const render = (props) => {
+  const user = useFragment(fragmentSpec, props.user)
+  const [idInEditing, edit] = useState(null)
+
+  return (
+    <ul className="ml-4 bg-red-100">
+      {_.map(user.books, (book) => (
+        <Row
+          key={book.rowId}
+          book={book}
+          isEditing={idInEditing === book.rowId}
+          onEdit={() => edit(book.rowId)}
+          onSave={(draft) => {}}
+        />
+      ))}
+    </ul>
+  )
+}
 
 export default render
