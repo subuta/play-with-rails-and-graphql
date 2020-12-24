@@ -9,7 +9,10 @@ import UserBooks from '../../components/UserBooks'
 
 import { Link } from 'react-router-dom'
 
-import { createPaginationContainer, graphql, QueryRenderer } from 'react-relay'
+import { createPaginationContainer } from 'react-relay'
+import { useQuery, graphql } from 'relay-hooks'
+
+// TODO: migrate `createPaginationContainer` to `usePagination`
 
 const count = 2
 
@@ -102,34 +105,33 @@ const PaginatedUsers = createPaginationContainer(
   }
 )
 
-const render = () => {
-  return (
-    <QueryRenderer
-      environment={environment}
-      query={graphql`
-        query usersQuery($count: Int!, $cursor: String) {
-          ...users_feed
-        }
-      `}
-      variables={{
-        count: count,
-        cursor: null,
-      }}
-      render={({ error, props }) => {
-        if (error) {
-          return <div>Error!</div>
-        }
-        if (!props) {
-          return <div>Loading...</div>
-        }
+const usersQuery = graphql`
+  query usersQuery($count: Int!, $cursor: String) {
+    ...users_feed
+  }
+`
 
-        return (
-          <div>
-            <PaginatedUsers rootQuery={props} />
-          </div>
-        )
-      }}
-    />
+const render = () => {
+  const { error, props } = useQuery(
+    usersQuery,
+    {
+      count: count,
+      cursor: null,
+    },
+    { fetchPolicy: 'network-only' }
+  )
+
+  if (error) {
+    return <div>Error!</div>
+  }
+  if (!props) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <div>
+      <PaginatedUsers rootQuery={props} />
+    </div>
   )
 }
 

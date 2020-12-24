@@ -4,7 +4,7 @@ module Mutations
 
     argument :rowId, Integer, required: true
     argument :title, String, required: true
-    argument :author_row_id, Integer, required: true
+    argument :author_row_id, Integer, required: false
 
     field :book, Types::BookType, null: true
     field :errors, [String], null: false
