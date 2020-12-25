@@ -23,19 +23,15 @@ export default (parentID) => {
     onError: (err) => {
       console.error(err)
     },
-    // configs: [
-    //   {
-    //     type: 'RANGE_ADD',
-    //     parentID,
-    //     connectionInfo: [
-    //       {
-    //         key: 'AddShip_ships',
-    //         rangeBehavior: 'append',
-    //       },
-    //     ],
-    //     edgeName: 'shipEdge',
-    //   },
-    // ],
+    updater: (store) => {
+      const payload = store.getRootField('addBook')
+      // Get the edge of the newly created Book record
+      const book = payload.getLinkedRecord('book')
+
+      const user = store.get(parentID)
+      const userBooks = user.getLinkedRecords('books') || []
+      user.setLinkedRecords([...userBooks, book], 'books')
+    },
   })
 
   return [
