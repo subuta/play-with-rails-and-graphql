@@ -3,28 +3,61 @@ import React from 'react'
 import _ from 'lodash'
 import classNames from 'classnames'
 
-import environment from '../../utils/relay-environment'
+import { Link } from 'react-router-dom'
+import { usePagination, useQuery, graphql } from 'relay-hooks'
 
 import UserBooks from '../../components/UserBooks'
 
-import { Link } from 'react-router-dom'
-
-import { createPaginationContainer } from 'react-relay'
-import { useQuery, graphql } from 'relay-hooks'
-
-// TODO: migrate `createPaginationContainer` to `usePagination`
-
 const count = 2
 
-const Users = ({ rootQuery, relay }) => {
+const fragmentSpec = graphql`
+  fragment users_feed on Query {
+    users(first: $count, after: $cursor) @connection(key: "users_users") {
+      edges {
+        cursor
+        node {
+          id
+          rowId
+          username
+          ...UserBooks_user
+        }
+      }
+    }
+  }
+`
+
+const connectionConfig = {
+  query: graphql`
+    query usersPaginatedQuery($count: Int!, $cursor: String) {
+      ...users_feed
+    }
+  `,
+  getFragmentVariables(prevVars, totalCount) {
+    return {
+      ...prevVars,
+      count: totalCount,
+    }
+  },
+  getVariables(props, { count, cursor }, fragmentVariables) {
+    return {
+      count,
+      cursor,
+    }
+  },
+}
+
+const PaginatedUsers = (props) => {
+  const [rootQuery, { isLoading, hasMore, loadMore }] = usePagination(fragmentSpec, props.rootQuery)
+
   if (!rootQuery) return <div />
 
-  const hasNextPage = relay.hasMore()
+  const hasNextPage = hasMore()
 
-  const loadMore = () => {
-    if (relay.isLoading()) return
+  const doLoadMore = () => {
+    if (isLoading()) return
 
-    relay.loadMore(
+    loadMore(
+      connectionConfig,
       count, // Fetch the next n items
       (error) => {
         if (error) {
@@ -56,54 +89,13 @@ const Users = ({ rootQuery, relay }) => {
           'py-2 px-4 bg-blue-500 text-white rounded font-bold',
           !hasNextPage && 'opacity-50 pointer-events-none',
         ])}
-        onClick={hasNextPage ? loadMore : _.noop}
+        onClick={hasNextPage ? doLoadMore : _.noop}
       >
         Load more
       </button>
     </div>
   )
 }
-
-// SEE: https://github.com/facebook/relay/issues/1705
-const PaginatedUsers = createPaginationContainer(
-  Users,
-  {
-    rootQuery: graphql`
-      fragment users_feed on Query {
-        users(first: $count, after: $cursor) @connection(key: "users_users") {
-          edges {
-            cursor
-            node {
-              id
-              rowId
-              username
-              ...UserBooks_user
-            }
-          }
-        }
-      }
-    `,
-  },
-  {
-    query: graphql`
-      query usersPaginatedQuery($count: Int!, $cursor: String) {
-        ...users_feed
-      }
-    `,
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
-    },
-    getVariables(props, { count, cursor }, fragmentVariables) {
-      return {
-        count,
-        cursor,
-      }
-    },
-  }
-)
 
 const usersQuery = graphql`
   query usersQuery($count: Int!, $cursor: String) {
