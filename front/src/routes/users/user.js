@@ -61,6 +61,7 @@ const render = () => {
         <button
           className="mt-2 py-2 px-4 bg-blue-500 text-white rounded font-bold"
           onClick={async () => {
+            if (!draft.trim()) return
             await mutate({ title: draft, authorRowId: Number(id) })
             setDraft('')
           }}

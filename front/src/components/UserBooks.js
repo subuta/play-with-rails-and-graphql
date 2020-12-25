@@ -4,9 +4,10 @@ import _ from 'lodash'
 import { useFragment, graphql } from 'relay-hooks'
 
 import useUpdateBookMutation from '@/mutations/UpdateBookMutation'
+import useDeleteBookMutation from '@/mutations/DeleteBookMutation'
 
 const Row = (props) => {
-  const { isEditing = false, onEdit = _.noop, onSave = _.noop, book } = props
+  const { isEditing = false, onEdit = _.noop, onDelete = _.noop, onSave = _.noop, book } = props
 
   const [draft, setDraft] = useState(book.title)
 
@@ -31,6 +32,10 @@ const Row = (props) => {
       <i className="material-icons ml-2 text-xl cursor-pointer hover:opacity-50" onClick={onEdit}>
         edit
       </i>
+
+      <i className="material-icons ml-2 text-xl cursor-pointer hover:opacity-50" onClick={onDelete}>
+        delete
+      </i>
     </li>
   )
 }
@@ -49,7 +54,8 @@ const fragmentSpec = graphql`
 const render = (props) => {
   const user = useFragment(fragmentSpec, props.user)
   const [idInEditing, edit] = useState(null)
-  const [mutate] = useUpdateBookMutation()
+  const [doUpdateBook] = useUpdateBookMutation()
+  const [doDeleteBook] = useDeleteBookMutation(props.user.id)
 
   return (
     <ul className="ml-4 bg-red-100">
@@ -59,8 +65,12 @@ const render = (props) => {
           book={book}
           isEditing={idInEditing === book.rowId}
           onEdit={() => edit(book.rowId)}
+          onDelete={async () => {
+            if (!window.confirm('Are you sure?')) return
+            await doDeleteBook({ rowId: book.rowId })
+          }}
           onSave={async (draft) => {
-            await mutate({ title: draft, rowId: book.rowId })
+            await doUpdateBook({ title: draft, rowId: book.rowId })
             edit(null)
           }}
         />

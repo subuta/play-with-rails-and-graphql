@@ -14,16 +14,7 @@ const mutation = graphql`
 `
 
 export default () => {
-  const [mutate, state] = useMutation(mutation, {
-    onCompleted: (response, errors) => {
-      console.log('Response received from server.')
-      console.log('response = ', response)
-      console.log('errors = ', errors)
-    },
-    onError: (err) => {
-      console.error(err)
-    },
-  })
+  const [mutate, state] = useMutation(mutation, {})
 
   return [
     (input) => {
