@@ -4,7 +4,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { RelayEnvironmentProvider } from 'relay-hooks'
 
-import environment from '../utils/relay-environment'
+import environment from '@/utils/relay-environment'
 
 import Users from './users'
 import User from './users/user'

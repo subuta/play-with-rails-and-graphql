@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 import { useQuery, graphql } from 'relay-hooks'
 import { useParams, Link } from 'react-router-dom'
 
-import UserBooks from '../../components/UserBooks'
+import UserBooks from '@/components/UserBooks'
 
-import useUpdateBookMutation from '../../mutations/AddBookMutation'
+import useUpdateBookMutation from '@/mutations/AddBookMutation'
 
 const userQuery = graphql`
   query userQuery($rowId: Int!) {

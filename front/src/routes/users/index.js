@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { usePagination, useQuery, graphql } from 'relay-hooks'
 
-import UserBooks from '../../components/UserBooks'
+import UserBooks from '@/components/UserBooks'
 
 const count = 2
 

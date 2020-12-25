@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 import { useFragment, graphql } from 'relay-hooks'
 
-import useUpdateBookMutation from '../mutations/UpdateBookMutation'
+import useUpdateBookMutation from '@/mutations/UpdateBookMutation'
 
 const Row = (props) => {
   const { isEditing = false, onEdit = _.noop, onSave = _.noop, book } = props
