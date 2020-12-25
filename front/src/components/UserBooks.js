@@ -24,7 +24,7 @@ const Row = (props) => {
 
   return (
     <li className="flex items-center">
-      <span>
+      <span className="inline-block px-2 py-1 border border-transparent">
         {book.rowId} - {book.title}
       </span>
 
